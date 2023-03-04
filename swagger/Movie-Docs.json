@@ -1,0 +1,506 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Movies Documentation",
+        "description": "CRUD API application made with Express and documented with Swagger",
+        "version": "1.0.11"
+    },
+    "_servers": [
+        {
+            "url": "http://localhost:3000"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Movies",
+            "description": "API of Movies"
+        },
+        {
+            "name": "Users",
+            "description": "API of Users"
+        }
+    ],
+    "paths": {
+        "/movies": {
+            "post": {
+                "tags": ["Movies"],
+                "summary": "Create or added new Movies",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "description": "Create new Movies",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movies"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movies"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "New movie created successfully."
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Movies"],
+                "summary": "Get all Movies",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "description": "List data of all movies",
+                "responses": {
+                    "200": {
+                        "description": "Get all movies success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "get": {
+                "tags": ["Movies"],
+                "summary": "Get Movie by Id",
+                "description": "Data movie list by Id",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id Movie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get movie success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Movies"],
+                "summary": "Update Movie",
+                "description": "Update Movie by Id",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id Movie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movies"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movies"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Movie updated successfully."
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Movies"],
+                "summary": "Deleted Movie",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id Movie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted movie successfully."
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create or added new User",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "path",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "consumes": "multipart/form-data",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "New user created successfully."
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get all users",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "path",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all user success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get user by Id",
+                "description": "Data user list by Id",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Users"],
+                "summary": "Update User",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update user success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Users"],
+                "summary": "Deleted User",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "description": "Id User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted user success"
+                    },
+                    "400": {
+                        "description": "failed or Invalid Authentication."
+                    },
+                    "401": {
+                        "description": "Invalid Authorization."
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Movies": {
+                "type": "object",
+                "required": ["title", "genres", "year"],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Penguin of Madagascar"
+                    },
+                    "genres": {
+                        "type": "string",
+                        "example": "Animation|Action|Adventure"
+                    },
+                    "year": {
+                        "type": "string",
+                        "example": "2014"
+                    }
+                }
+            },
+            "Users": {
+                "type": "object",
+                "required": ["email", "gender", "password", "role"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "sampleuser@mail.com"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "example": "Female"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "fQgz62oBpaYs5"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "Content Creator"
+                    }
+                }
+            }
+        }
+    }
+}
