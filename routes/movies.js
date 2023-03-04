@@ -4,7 +4,7 @@ const pool = require("../config/db");
 const { authorization } = require("../middleware/auth");
 
 // GET ALL MOVIES
-router.get("/movies", authorization, (req, res) => {
+router.get("/movies", (req, res) => {
     const { limit, page } = req.query;
 
     let totalLimit = limit ? +limit : "";
@@ -22,7 +22,7 @@ router.get("/movies", authorization, (req, res) => {
 });
 
 // GET MOVIE BY ID
-router.get("/movies/:id", authorization, (req, res) => {
+router.get("/movies/:id", (req, res) => {
     const { id } = req.params;
 
     const movieById = `SELECT * FROM movies WHERE id = $1`;

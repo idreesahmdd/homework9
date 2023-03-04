@@ -4,7 +4,7 @@ const pool = require("../config/db");
 const { authorization } = require("../middleware/auth");
 
 // GET ALL USERS
-router.get("/users", authorization, (req, res) => {
+router.get("/users", (req, res) => {
     const { limit, page } = req.query;
 
     let totalLimit = limit ? +limit : "";
@@ -15,7 +15,7 @@ router.get("/users", authorization, (req, res) => {
         LIMIT ${totalLimit} OFFSET ${(totalPage - 1) * totalLimit} 
     `;
 
-    pool.query(allUser, authorization, (err, result) => {
+    pool.query(allUser, (err, result) => {
         if (err) throw err;
 
         res.status(200).json(result.rows);
@@ -23,7 +23,7 @@ router.get("/users", authorization, (req, res) => {
 });
 
 // GET USER BY ID
-router.get("/users/:id", authorization, (req, res) => {
+router.get("/users/:id", (req, res) => {
     const { id } = req.params;
 
     const userById = `SELECT * FROM users WHERE id = $1;`;
