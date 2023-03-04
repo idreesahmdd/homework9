@@ -29,7 +29,7 @@ router.get("/movies/:id", authorization, (req, res) => {
 
     pool.query(movieById, [id], (err, result) => {
         if (err) throw err;
-        if (result.rows.length !== 0) {
+        if (result.rows[0]) {
             res.status(200).json(result.rows[0]);
         } else {
             res.status(404).json({
