@@ -12,7 +12,7 @@ app.use(morgan(`tiny`));
 // SWAGGER
 const swaggerUi = require("swagger-ui-express");
 const movieDocs = require("./swagger/Movie-Docs.json");
-app.use("/docs-movie", swaggerUi.serve, swaggerUi.setup(movieDocs));
+app.use("/movie-docs", swaggerUi.serve, swaggerUi.setup(movieDocs));
 
 // ROUTES
 app.use(route);
