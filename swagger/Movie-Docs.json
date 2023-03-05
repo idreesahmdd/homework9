@@ -18,6 +18,14 @@
         {
             "name": "Users",
             "description": "API of Users"
+        },
+        {
+            "name": "Login",
+            "description": "API of Login"
+        },
+        {
+            "name": "Register",
+            "description": "API of Register"
         }
     ],
     "paths": {
@@ -241,51 +249,6 @@
             }
         },
         "/users": {
-            "post": {
-                "tags": ["Users"],
-                "summary": "Create or added new User",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "path",
-                        "description": "Access key",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "consumes": "multipart/form-data",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Users"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Users"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "New user created successfully."
-                    },
-                    "400": {
-                        "description": "failed or Invalid Authentication."
-                    },
-                    "401": {
-                        "description": "Invalid Authorization."
-                    },
-                    "500": {
-                        "description": "Internal Server Error."
-                    }
-                }
-            },
             "get": {
                 "tags": ["Users"],
                 "summary": "Get all users",
@@ -457,6 +420,82 @@
                     }
                 }
             }
+        },
+        "/register": {
+            "post": {
+                "tags": ["Register"],
+                "summary": "Register User",
+                "description": "Create new User",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register successfully."
+                    },
+                    "400": {
+                        "description": "Register failed."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": ["Login"],
+                "summary": "Login user / account",
+                "description": "Login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Login successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Wrong Password."
+                    },
+                    "404": {
+                        "description": "User or email not found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -498,6 +537,67 @@
                     "role": {
                         "type": "string",
                         "example": "Content Creator"
+                    }
+                }
+            },
+            "Register": {
+                "type": "object",
+                "required": ["email", "password", "gender", "role"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "yourpassword"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "example": "Male"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "Frontend"
+                    }
+                }
+            },
+            "Login": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "yourpassword"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 21
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "example": "Male"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "Access Token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI0LCJlbWFpbCI6InBvc3RncmVzQGdtYWlsLmNvbSIsImdlbmRlciI6Ik1hbGUiLCJyb2xlIjoiUGVkYWdhbmcga2FraSBsaW1hIiwiaWF0IjoxNjc3OTgwOTk1fQ.Sr6e1rPJlHd2nA2dvldgWY_dSeyWK29FfUgY-9LL5_o"
                     }
                 }
             }
