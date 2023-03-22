@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db");
-const { authorization } = require("../middleware/auth");
+const {authorization} = require("../middleware/auth");
 
 // GET ALL USERS
 router.get("/users", (req, res) => {
-    const { limit, page } = req.query;
+    const {limit, page} = req.query;
 
-    let totalLimit = limit ? +limit : "";
-    let totalPage = page ? +page : "";
+    let totalLimit = limit ? +limit : "10";
+    let totalPage = page ? +page : "1";
 
     const allUser = `
         SELECT * FROM users ORDER BY id
@@ -24,7 +24,7 @@ router.get("/users", (req, res) => {
 
 // GET USER BY ID
 router.get("/users/:id", (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     const userById = `SELECT * FROM users WHERE id = $1;`;
     pool.query(userById, [id], (err, result) => {
@@ -41,7 +41,7 @@ router.get("/users/:id", (req, res) => {
 
 // CREATE NEW USER
 router.post("/users/", authorization, (req, res) => {
-    const { email, gender, password, role } = req.body;
+    const {email, gender, password, role} = req.body;
     const createUser = `INSERT INTO users (email,gender,password,role)
                             VALUES
                                 ($1,$2,$3,$4)`;
@@ -62,8 +62,8 @@ router.post("/users/", authorization, (req, res) => {
 
 // UPDATE USER
 router.put("/users/:id", authorization, (req, res) => {
-    const { email, gender, password, role } = req.body;
-    const { id } = req.params;
+    const {email, gender, password, role} = req.body;
+    const {id} = req.params;
 
     const updateUser = `
         UPDATE users
@@ -90,7 +90,7 @@ router.put("/users/:id", authorization, (req, res) => {
 
 // DELETE USER
 router.delete("/users/:id", authorization, (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     const findUser = `SELECT * FROM users WHERE id = $1`;
 
     pool.query(findUser, [id], (err, result) => {

@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../config/db");
-const { authorization } = require("../middleware/auth");
+const {authorization} = require("../middleware/auth");
 
 // GET ALL MOVIES
 router.get("/movies", (req, res) => {
-    const { limit, page } = req.query;
+    const {limit, page} = req.query;
 
-    let totalLimit = limit ? +limit : "";
-    let totalPage = page ? +page : "";
+    let totalLimit = limit ? +limit : "10";
+    console.log(totalLimit);
+    let totalPage = page ? +page : "1";
 
     const allMovies = ` 
         SELECT * FROM movies ORDER BY id
@@ -23,7 +24,7 @@ router.get("/movies", (req, res) => {
 
 // GET MOVIE BY ID
 router.get("/movies/:id", (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     const movieById = `SELECT * FROM movies WHERE id = $1`;
 
@@ -41,7 +42,7 @@ router.get("/movies/:id", (req, res) => {
 
 // CREATE NEW MOVIE
 router.post("/movies", authorization, (req, res) => {
-    const { title, genres, year } = req.body;
+    const {title, genres, year} = req.body;
     const createMovie = `INSERT INTO movies (title,genres,year)
                             VALUES
                                 ($1,$2,$3)`;
@@ -62,8 +63,8 @@ router.post("/movies", authorization, (req, res) => {
 
 // UPDATE MOVIE
 router.put("/movies/:id", authorization, (req, res) => {
-    const { title, genres, year } = req.body;
-    const { id } = req.params;
+    const {title, genres, year} = req.body;
+    const {id} = req.params;
 
     const updateMovie = `
         UPDATE movies 
@@ -89,7 +90,7 @@ router.put("/movies/:id", authorization, (req, res) => {
 
 // DELETE MOVIE
 router.delete("/movies/:id", authorization, (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     const findMovie = `SELECT * FROM movies WHERE id = $1`;
     pool.query(findMovie, [id], (err, result) => {
